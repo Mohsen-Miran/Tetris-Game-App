@@ -11,7 +11,7 @@ variables:
   containerRegistry: 'acr4brw67wwqky4c.azurecr.io'
   dockerfilePath: '**/Dockerfile'
   tag: '$(Build.BuildId)'
-  imagePullSecret: 'csacr5d93-auth'  
+
 
 stages:
 
