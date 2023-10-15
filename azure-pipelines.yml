@@ -3,8 +3,8 @@ trigger:
 
 variables:
   dockerRegistryServiceConnection: 'ACR'
-  imageRepository: 'azure-vote-front'
-  containerRegistry: '< *** Replace with ACR DNS registry name *** >'
+  imageRepository: 'tetrisgameapp'
+  containerRegistry: 'acr4brw67wwqky4c.azurecr.io'
   dockerfilePath: '**/Dockerfile'
   tag: '$(Build.BuildId)'
   imagePullSecret: 'csacr5d93-auth'  
@@ -32,34 +32,4 @@ stages:
     - upload: manifests
       artifact: manifests
 
-- stage: Development
-  displayName: Deploy to dev
-  dependsOn: Build
 
-  jobs:
-  - deployment: Deploy
-    displayName: Deploy to dev
-    pool:
-      name: Default
-    environment: 'dev.default'
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: KubernetesManifest@0
-            displayName: Create imagePullSecret
-            inputs:
-              action: createSecret
-              secretName: $(imagePullSecret)
-              dockerRegistryEndpoint: $(dockerRegistryServiceConnection)
-              
-          - task: KubernetesManifest@0
-            displayName: Deploy to Kubernetes cluster
-            inputs:
-              action: deploy
-              manifests: |
-                $(Pipeline.Workspace)/manifests/vote.yml
-              imagePullSecrets: |
-                $(imagePullSecret)
-              containers: |
-                $(containerRegistry)/$(imageRepository):$(tag)
