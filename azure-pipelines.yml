@@ -1,6 +1,10 @@
 trigger:
 - main
 
+resources:
+- repo: self
+
+
 variables:
   dockerRegistryServiceConnection: 'ACR'
   imageRepository: 'tetrisgameapp'
