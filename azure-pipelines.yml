@@ -10,7 +10,7 @@ variables:
   dockerRegistryServiceConnection: 'ACR'
   imageRepository: 'tetrisgameapp'
   containerRegistry: 'miranacr.azurecr.io'
-  dockerfilePath: '**/Dockerfile'
+  dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
   tag: '$(Build.BuildId)'
    
 
